@@ -178,3 +178,55 @@ def eda_fig_1(df, path):
     # fig.suptitle(fig_title);
     print(fig_title)
     plt.show()
+
+def img_pt_plot(
+        ys,
+        legend = None,
+        b_flip_y=True,
+        colors = ['blue', 'green', 'red'],
+        figsize=(4,4),
+        ):
+
+    plt.figure(figsize=figsize)
+    
+    flip_factor = -1 if b_flip_y else 1
+
+    for i,y in enumerate(ys):
+        plt.scatter(y[:,0], y[:,1].mul(flip_factor), 
+                    color=colors[i], alpha=0.4);
+    
+    plt.ylim(-1,1); plt.xlim(-1,1);
+    
+    if b_flip_y:
+        plt.ylabel('coords reversed on y for display')
+        plt.xlabel('coords same for x')
+    
+    if legend is not None:
+        plt.legend(['topleft', 'center']);
+    
+    plt.title('position of target points in dataset  \n (flow field position)');
+
+
+def train_history_dualplot(
+        train_history,
+        fig2_startx,
+        baseline_err = None,
+        ):
+
+    fig, ax = plt.subplots(1,2,figsize=(10,5))
+    legend = ['train','valid']
+    if baseline_err is not None: legend += ['baseline err']
+
+    ax[0].plot(train_history['train_loss'])
+    ax[0].plot(train_history['valid_loss'])
+    if baseline_err is not None:
+        ax[0].hlines(baseline_err, *ax[0].get_xlim(), linestyle='--')
+    ax[0].legend(legend);
+    ax[0].set_xlabel('all epochs'); ax[0].set_ylabel('MSE')
+
+    ax[1].plot(train_history['train_loss'][fig2_startx:])
+    ax[1].plot(train_history['valid_loss'][fig2_startx:]);
+    if baseline_err is not None:
+        ax[1].hlines(baseline_err, *ax[1].get_xlim(), linestyle='--')
+    ax[1].legend(legend);
+    ax[1].set_xlabel('late epochs');
