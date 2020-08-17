@@ -1,0 +1,20 @@
+{
+    "id": "stillsut/mnist-helpers",
+    "title": "mnist-helpers",
+    "code_file": "mnist_helpers.py",
+    "language": "python",
+    "kernel_type": "script",
+    "is_private": false,
+    "enable_gpu": true,
+    "enable_internet": true,
+    "keywords": [
+    ],
+    "dataset_sources": [
+    ],
+    "kernel_sources": [
+      
+    ],
+    "competition_sources": [
+    ]
+  }
+  

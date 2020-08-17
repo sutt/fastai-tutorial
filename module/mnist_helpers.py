@@ -3,7 +3,19 @@ import pandas as pd
 from IPython.display import display
 from matplotlib import pyplot as plt
 
-from fastai2.basics import *
+# my_env = os.environ.get('USER', 'KAGGLE')
+# b_kaggle = (my_env == 'KAGGLE')
+# b_gcp    = (my_env == 'jupyter')
+# b_local  = (my_env == 'user')
+
+# if b_kaggle:
+#     try:
+#         from fastai2.vision.all import *
+#     except:
+#         os.system('''pip install fastai2''')
+
+
+from fastai2.basics import *    
 from fastai2.vision.all import *
 
 def point_from_img(fn, path):
