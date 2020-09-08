@@ -1,0 +1,61 @@
+9.8
+
+"TopLeft" target is kind of an "arbitrary" point but should be close to what a bounding box is trying to predict. Why so poor?
+    - note: that the point (min(cols), min(rows)) is the true topleft corner of the bounding box
+
+Jeremy chops it up
+https://www.wandb.com/podcast/jeremy-howard
+
+My heads so far, like - Net3, Relu4, etc - all used flatten as the first step. That's a problem right there.
+    maybe I can add on 
+
+[ ] Get a RCNN pytorch model and watch how the head works?
+
+User submitted SSD in a notebook with fastai_v1
+https://forums.fast.ai/t/dynamic-ssd-implementation-for-fastai-v1/36161/3
+https://github.com/rohitgeo/singleshotdetector
+    -> in my folder as ssd_fastai1.ipynb
+
+Official fastai obj-detector (RetinaNet) discussion:
+https://forums.fast.ai/t/object-detection-in-fast-ai-v1/29266
+
+    notebook
+    https://github.com/fastai/fastai_dev/blob/master/dev_nb/102a_coco.ipynb
+
+Answers to "NN object localization"
+
+    My project doesn't work
+    https://stats.stackexchange.com/questions/362480/object-localization-with-cnn
+
+    Tutorial from pytorch, extensive
+    https://pytorch.org/tutorials/intermediate/torchvision_tutorial.html
+    
+    Tutorial from pytorch, smaller
+    https://pytorch.org/hub/nvidia_deeplearningexamples_ssd/
+
+    Quick review of main algos
+    https://medium.com/machine-learning-bites/deeplearning-series-objection-detection-and-localization-yolo-algorithm-r-cnn-71d4dfd07d5f
+
+    Review of Lit
+    https://machinelearningmastery.com/object-recognition-with-deep-learning/
+
+    Review of the Lit
+    https://leonardoaraujosantos.gitbook.io/artificial-inteligence/machine_learning/deep_learning/object_localization_and_detection
+
+    Giant blog review of lit
+    https://dudeperf3ct.github.io/object/detection/2019/01/07/Mystery-of-Object-Detection/
+
+    Deep step by step guide to object detection
+    https://towardsdatascience.com/building-your-own-object-detector-pytorch-vs-tensorflow-and-how-to-even-get-started-1d314691d4ae
+
+    Review of field + some code
+    https://medium.com/analytics-vidhya/guide-to-object-detection-using-pytorch-3925e29737b9
+
+    Papers with code Archive
+    https://paperswithcode.com/task/object-localization
+
+9.6
+
+[ ] Investigate new version for bug, propose fix
+    CSVLogger values get erased after calling get_preds()
+
