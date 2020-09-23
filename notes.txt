@@ -1,3 +1,132 @@
+
+9.23
+
+	[x] Redo notebook custom-...-3 with topleft as the target
+	[ ] Build an import script for setup
+	
+	[ ] tut_multitask_3 - bottom section is wrong, doesn't account for topleft task
+		[ ] Net3 is built on 
+		[ ] Part _04.ipynb also does center point instead of topleft
+	
+	[ ] Do a commit
+	
+	[ ] bring where/argmax to FeatsNet
+	
+	Interesting idea: the threshold of the cutoff could be differentiable
+		Could this be done with a RELU?
+		
+	
+
+9.21
+
+	NN Tutorial
+		Priorities
+		[ ] Redo notebook custom-...-3 with topleft as the target
+		
+		
+		Thoughts
+		[ ] One thing I'd like to see is adding dummy variables
+			- either constants or random values
+		[ ] Can I add argmax / argmin in later layers too?
+		[ ] What exactly do the argmax features do?
+			- why aren't the new features exact matches to the synthetic point targets?
+				- could they be made so?
+		[ ] Could this model be even better with more hidden layers?
+	
+	SQL Review
+	[ ] connect in jupyter to mysql
+	[ ] Convert the problem to mysql
+	
+
+9.20
+
+Abandon gumbel softmax for now, work on trying to get argmax into the initial layer
+
+	[x] new notebook
+	[x] replicate exisiting work
+	[x] look at iafoss's solution, how is his differentiable?
+		-> it only changes dimensions of the tiles and puts it thorugh two separate networks
+	[x] do we need the pprocessing layers in the init?
+		-> to update the weights/biases-parameters, yes
+		-> to do a forward pass, no
+	
+	
+
+9.19
+
+How to concat layers?
+https://discuss.pytorch.org/t/concatenate-layer-output-with-additional-input-data/20462/2
+
+What does Unpool do?
+
+9.18
+
+Interesting to see how quickly you can converge in a bare bones mm-style NN task of predicting y from an arbitrary task. (from pytroch demo)
+
+Maybe what we want is a custom nn.Module that does argmin / argmax as additional features when coming into the head.
+
+	see:	https://pytorch.org/tutorials/beginner/examples_nn/two_layer_net_module.html#sphx-glr-beginner-examples-nn-two-layer-net-module-py
+
+	
+	Interesting challenge case: where the 3's look at topleft point and the 7's look at the middle point.
+	
+	Or extend this further, to all digits in mnist
+
+	
+ Combining digit classification and dependant point location as a task would have contributions to the OCR modelling space and even more broadly to the idea of understanding documents and diagrams.
+ 
+	What are examples of OCR datasets?
+	
+	What are examples of OCR arch's?
+	
+
+Two strong claims I am making is that:
+1. This task can't be done well with existing backbone + head. 
+2. But I am saying some new form of either a head or full-bacbone-and-head does solve this problem well.
+
+In regards to #1, what ways could I be wrong?
+
+	One possibility is that image size is the problem and dimension redcution whem doing convolutional pooling is erasing the information.
+	
+	Maybe Min/Max Pooling would help my backbone preserve the information?
+	
+	Another option is is that I need to do lots of finetuning or feezing or re-training the backbone, or something?
+	
+	Could be some kind of batch/learning rate thing?
+	
+Embedding Argmax with autograd enabled:
+
+	https://discuss.pytorch.org/t/differentiable-argmax/33020/8
+	
+	Could I do a set of AvgMinPool with succesive reduction
+	https://discuss.pytorch.org/t/predict-a-categorical-variable-and-then-embed-it-one-hot/85555/5
+	
+	why is argmin differentiable? 	https://stackoverflow.com/questions/54969646/how-does-pytorch-backprop-through-argmax
+	
+	"Siamese Network"
+	
+	"embeddings" in the network
+	
+	
+We can check for if resnet has a "bad backbone" (loses information) or just needs a "better head" (in that the backbone is essentially worthless).
+
+	We can flatten the img data initially and then compare that against the feature-map created by backbone...both fed into the same head...that will give us a relevant comparison.
+	
+What arch uses two pooling layers?
+	-> Resnet18 does at the beginning of head: Avg + Max Pooling
+	
+	
+	
+Todo:
+[x] replicate existing work
+[x] add a torch.nn.Module to replicate the layers thing
+[ ] do a forward pass on resnet18,
+	[ ] examine traditional pooling
+[ ] Replicate the argmax() with nn functions
+[ ] 
+	
+
+
 9.8
 
 "TopLeft" target is kind of an "arbitrary" point but should be close to what a bounding box is trying to predict. Why so poor?
