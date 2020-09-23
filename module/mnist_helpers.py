@@ -1,4 +1,5 @@
 import os, sys
+import copy as copyroot
 import pandas as pd
 from IPython.display import display
 from matplotlib import pyplot as plt
@@ -251,3 +252,43 @@ def train_history_dualplot(
         ax[1].hlines(baseline_err, *ax[1].get_xlim(), linestyle='--')
     ax[1].legend(legend);
     ax[1].set_xlabel('late epochs');
+
+def build_dls(target='topleft'):
+
+    path = untar_data(URLs.MNIST_TINY)
+    df = build_df(path)
+    df.head(2)
+
+    y_names = [
+        'point_topleft_x', 
+        'point_topleft_y',
+        'point_center_x',
+        'point_center_y'
+        ]
+
+    db =   DataBlock(blocks=(ImageBlock(cls=PILImageBW), 
+                            PointBlock), 
+                    splitter=RandomSplitter(seed=0),
+                    get_x=ColReader('fn', pref=path),
+                    )
+
+    db_1_topleft = copyroot.deepcopy(db)
+    db_1_center  = copyroot.deepcopy(db)
+    db_2         = copyroot.deepcopy(db)    
+
+    def set_get_y(db, cr):
+        db.get_y = cr
+        db.getters[db.n_inp:] = L(db.get_y)
+
+    set_get_y( db_1_topleft, ColReader(y_names[:2]) )
+    set_get_y( db_1_center,  ColReader(y_names[2:]) )
+    set_get_y( db_2,         ColReader(y_names) )
+
+    dl_1_topleft = db_1_topleft.dataloaders(df)
+    dl_1_center  = db_1_center.dataloaders(df)
+    dl_2         = db_2.dataloaders(df)
+
+    if   target == 'topleft': return dl_1_topleft
+    elif target == 'center':  return dl_1_center
+    elif target == 'dual':    return dl_2
+    else: raise Exception('f{target} not a valid `target`')

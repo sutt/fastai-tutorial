@@ -5,16 +5,22 @@
 	[ ] Build an import script for setup
 	
 	[ ] tut_multitask_3 - bottom section is wrong, doesn't account for topleft task
-		[ ] Net3 is built on 
+		[ ] Net3 is exceeds resnet on centerpoint but does it on topleft?
 		[ ] Part _04.ipynb also does center point instead of topleft
 	
-	[ ] Do a commit
+	[x] Do a commit
 	
-	[ ] bring where/argmax to FeatsNet
+	[x] Display the argmax features with multiplots
+	
+	[ ] Add an optional other dim to BaseNet, it seems to help so much with topleft
+	
+	[x] bring pts features into FeatsNet
 	
 	Interesting idea: the threshold of the cutoff could be differentiable
-		Could this be done with a RELU?
+		Could this be done with a RELU? or doing an .add_ with a torch.where
+		But this requires the argmax and "matmul-ish" steps also be differential, right?
 		
+		[ ] do .build_feats and concat after the first layer to see if you can do differences?
 	
 
 9.21
