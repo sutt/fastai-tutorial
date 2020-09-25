@@ -12,22 +12,59 @@
 			[x] how to handle unflow field for the calcs? to match mse
 			[x] build sk helper function
 			
-		[ ] more metrics
-			[ ] build baseline
-			[ ] why is r2 weird on metrics3, center ?
-				- could just be a poorly loaded model
-				[ ] retrain the model and load
+		
+		[ ] misc
+		
+		[x] more metrics
+			[x] why is r2 weird on metrics3, center ?
+			
+				note: changing y_range on inference also changes predictive accuracy of predictions (more liberal -> worse acc)
+				
+				[x] retrain the model and load into metrics-3
+					
+					re-running with model_fn = ____4.pth
+					
+					>gcloud compute scp jupyter@may2-instance-1:~/fastai-tutorial/ model/pt3_center_4.pth
+					
+					[x] what is the cloud conda env to use?
+						-> using fastai2-aug-kernel
+					
+					[x] why does function eda_fig_1 -> RegressionBlock, break?
+						-> just a refactor from fastai2
+			
+			
+		remaining mysteries on resnet metrics:
+		
+			- might one to save these mysteries until we port to new fastai version
+			
+			[ ] why did my re-run of topleft training loop result in 45 instead 58 r2? esp. when I am using set_seed()?
+			
+			[ ] why does metrics_df calc differently on cloud and locally with "same model" and dataset? 
+				Split? -> no those are matching
+				
 			[ ] r2 looks fishy in other areas too, why not corresponding with mse?
 				- could it be a problem with r2_score()?
-			
-		[ ] audit the centerpoint calc, it looks fishy for one of the 7's
-		
+				
+		[ ] metrics todos
+			[ ] build baseline
+			[ ] with baseline we can plot r2 vs mse and see if identity exists?
+					
+	
 		[ ] metrics-4 
 			[ ] BaseNet
 			[ ] FeatsNet
+
 		
-		training ideas:
-			[ ] maybe decreasing the batchsize
+		other ideas:
+			[ ] maybe decreasing the batchsize during training featsnet?
+			[ ] why is there a good fit for x on topleft and y on topleft?
+				- can display pred vs actual with:
+					- title showing r2
+					- error bars around y = x
+			[ ] audit the centerpoint calc, it looks fishy for one of the 7's
+			
+		[ ] Bring features from featsnet into classic-ml fitting
+			[ ] is there a point that's exactly correct?
 		
 		[ ] change the names of notebook
 			10_glossary_subject_v1.ipynb
