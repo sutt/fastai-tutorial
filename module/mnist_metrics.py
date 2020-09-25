@@ -37,6 +37,8 @@ def metrics_df(
 
     df['details'] = s_details
 
+    start_cols = ['model', 'details', 'split']
+
     col_order = (start_cols + [col for col in df.columns 
                                 if col not in start_cols])
     df = df.loc[:,col_order]

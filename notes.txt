@@ -1,6 +1,82 @@
+9.25
+
+	tut
+		[x] multi-index dataframe
+		
+		[x] metrics-1: add resnets
+			[x] match to their output on training history
+			[x] match mse b/w fastai
+			
+		[x] metrics-2: add base models
+			[x] how to handle 2 y scalars in evaluation?
+			[x] how to handle unflow field for the calcs? to match mse
+			[x] build sk helper function
+			
+		[ ] more metrics
+			[ ] build baseline
+			[ ] why is r2 weird on metrics3, center ?
+				- could just be a poorly loaded model
+				[ ] retrain the model and load
+			[ ] r2 looks fishy in other areas too, why not corresponding with mse?
+				- could it be a problem with r2_score()?
+			
+		[ ] audit the centerpoint calc, it looks fishy for one of the 7's
+		
+		[ ] metrics-4 
+			[ ] BaseNet
+			[ ] FeatsNet
+		
+		training ideas:
+			[ ] maybe decreasing the batchsize
+		
+		[ ] change the names of notebook
+			10_glossary_subject_v1.ipynb
+			20_research_subject_v2.ipynb
+	
+	
+	obj-detect
+		[ ] where does the trained model + arch live on filesystem?
+		[ ] some kind of bbox utility?
+			- can take from fastai or from icevision
+	
+	
+	notes:
+		"keypoint" detection - Review of Lit:
+				
+				COSFIRE filters, Azzopardi 2013				https://www.um.edu.mt/library/oar/bitstream/123456789/8375/1/PAMI2013.pdf
+				https://arxiv.org/pdf/1904.00889.pdf
+				
+				Eklund 2020 - Segmentation of floor plans + keypoints for the corners
+				https://www.diva-portal.org/smash/get/diva2:1450823/FULLTEXT01.pdf
+				
+				R-Cnn 2015	https://www.cv-foundation.org/openaccess/content_cvpr_2015/app/2B_004.pdf
+				
+				Primer on keypoints	https://www.sicara.ai/blog/2019-07-16-image-registration-deep-learning
+					keypoints from SURF/SIFT are used fro stiching/registration
+					
+					Looking at the invariant features of CNN's
+					e.g. https://arxiv.org/ftp/arxiv/papers/1904/1904.00197.pdf
+							
+		docs have a model for this... does it work?
+		https://pytorch.org/docs/stable/torchvision/models.html#keypoint-r-cnn
+		
+		Detectron Repo, a c/np based framework agnositc (?) 	
+		https://github.com/zhaoweicai/Detectron-Cascade-RCNN/blob/master/MODEL_ZOO.md
+		
+			https://arxiv.org/abs/1906.09756
+			
+		Optical Flow papers and benchmarks
+		https://benchmarks.ai/kitti-optical-flow-2015
+		
+		
+		keep fn key locked on	https://www.reddit.com/r/Surface/comments/7wvy3t/can_the_surface_book_2_lock_the_fn_key/
+	
+		
+		
+
 9.24
 
-	[ ] do a commit
+	[x] do a commit
 	
 	[ ] how to catch the histroy of a training run?
 	
