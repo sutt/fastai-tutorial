@@ -1,8 +1,66 @@
+9.24
 
+	[ ] do a commit
+	
+	[ ] how to catch the histroy of a training run?
+	
+		fastai issue: CSVLogger append=True doesn't work great
+		
+	[ ] build class to capture training history
+	[ ] build a major results notebook
+		- save tabular results as jsons, then add a property about where it came from
+		
+	[ ] port the notebooks to new version of fastai
+	
+	[ ] It would be interesting to track training loss without dropout
+	
+	[ ] How does ridge do on topleft task?
+	[ ] How do differnet models do with the expanded feature set?
+	
+		
+	
+	Notes on ML:
+	
+		pretrained model zoo
+		https://github.com/balavenkatesh3322/CV-pretrained-model
+		
+		tips + links from competitions
+		https://neptune.ai/blog/binary-classification-tips-and-tricks-from-kaggle
+		
+		https://www.reddit.com/r/computervision/
+	
+		ping pong self balancing delta robot	https://www.reddit.com/r/computervision/comments/htoumy/ping_pong_ball_stabilization/
+		
+			Showcase video
+			https://www.youtube.com/watch?v=57DbEEBF7sE
+			
+			Secret Instructables
+			https://www.instructables.com/id/XBall-Balancing-PID-System/
+			
+			The insturctables archived
+			http://archive.is/pXzCq
+			
+			404 Instructables
+			https://www.instructables.com/id/Ball-Balancing-PID-System/
+			
+			Johan Link, 19 year old etudiant in Switzerland
+				https://www.youtube.com/channel/UCKqAb79t9iPfma8BsR_C8jA
+				https://www.instructables.com/member/Johan+Link/
+				https://www.linkedin.com/in/johan-link-aa538318a/
+				
+			Another Delta bot - based on capcitance positioning	https://www.instructables.com/id/PID-Controlled-Ball-Balancing-Stewart-Platform/
+	
+		CV team on producthunt
+		https://www.producthunt.com/posts/picsell-ia-3
+		
+		Variational Auto Encoders - for generative nets
+			https://jaan.io/what-is-variational-autoencoder-vae-tutorial/	https://towardsdatascience.com/intuitively-understanding-variational-autoencoders-1bfe67eb5daf
+		
+	
 9.23
 
 	[x] Redo notebook custom-...-3 with topleft as the target
-	[ ] Build an import script for setup
+	[x] Build an import script for setup
 	
 	[ ] tut_multitask_3 - bottom section is wrong, doesn't account for topleft task
 		[ ] Net3 is exceeds resnet on centerpoint but does it on topleft?
@@ -21,6 +79,8 @@
 		But this requires the argmax and "matmul-ish" steps also be differential, right?
 		
 		[ ] do .build_feats and concat after the first layer to see if you can do differences?
+	
+	[ ] need a relu layer in my BaseNet?
 	
 
 9.21
