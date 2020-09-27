@@ -1,3 +1,33 @@
+9.26
+
+	audit calcs
+		- the mse/r2 relationship might not be perfect because diff splits, 
+			(at least between sklearn and pytorch models)
+			[ ] check the baseline err for each
+		
+	[x] is r2 symmetric? -> no
+	
+	[x] correct order of pred, actual on r2_score
+		[x] twice in mnist_metrics
+		[x] anywhere else?
+	
+	[x] add target to mnist_metrics
+	
+	[x] rerun metrics 1 and 3
+	[x] concat all tables
+			
+	[x] why is dist_r2 negative for topleft resnet model?
+		[x] why is it positive for net3 with same dist_avg?
+		-> mistake in calc of baseline
+		
+	[x] plot dist_r2 vs dist_avg
+		-> looks like there's a difference in split
+		-> it's still not looking right
+
+	[ ] why is mse and dist_avg different b/w net3 and resnet18?
+	
+	[ ] commit
+	
 9.25
 
 	tut
@@ -12,8 +42,6 @@
 			[x] how to handle unflow field for the calcs? to match mse
 			[x] build sk helper function
 			
-		
-		[ ] misc
 		
 		[x] more metrics
 			[x] why is r2 weird on metrics3, center ?
@@ -45,6 +73,10 @@
 			[ ] r2 looks fishy in other areas too, why not corresponding with mse?
 				- could it be a problem with r2_score()?
 				
+		[ ] misc
+			[ ] re-populate tut_multitask_3 missing cell
+			[ ] commit new metrics + tbls
+		
 		[ ] metrics todos
 			[ ] build baseline
 			[ ] with baseline we can plot r2 vs mse and see if identity exists?
