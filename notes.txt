@@ -1,9 +1,24 @@
+9.28
+
+	[x] FeatsNet, best train
+		[x] make it terse
+		[x] output metrics
+
+	[ ] bring feats pts11, pts12 to the basic-ML models
+		[ ] metrics on those
+
+	notes:
+		would there be a better fit for using sqroot loss?
+			- what type of synthetic problem could you construct here?
+			- this just involves taking a sqroot at the end 
+			   before doing loss.backward()?
+
 9.26
 
 	audit calcs
 		- the mse/r2 relationship might not be perfect because diff splits, 
 			(at least between sklearn and pytorch models)
-			[ ] check the baseline err for each
+			[x] check the baseline err for each
 		
 	[x] is r2 symmetric? -> no
 	
@@ -24,8 +39,10 @@
 		-> looks like there's a difference in split
 		-> it's still not looking right
 
-	[ ] why is mse and dist_avg different b/w net3 and resnet18?
-	
+	[x] why is mse and dist_avg different b/w net3 and resnet18?
+		-> taking sqroot of each residual before summing
+		-> there's a little Jensen's inequality here, right?
+
 	[x] commit
 	
 9.25
