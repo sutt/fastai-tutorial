@@ -26,7 +26,7 @@
 
 	[ ] why is mse and dist_avg different b/w net3 and resnet18?
 	
-	[ ] commit
+	[x] commit
 	
 9.25
 
