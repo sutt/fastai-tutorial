@@ -4,14 +4,18 @@
 		[x] make it terse
 		[x] output metrics
 
-	[ ] bring feats pts11, pts12 to the basic-ML models
-		[ ] metrics on those
+	[x] bring feats pts11, pts12 to the basic-ML models
+		[x] metrics on those
 
 	notes:
-		would there be a better fit for using sqroot loss?
+		
+		+ would there be a better fit for using sqroot loss?
 			- what type of synthetic problem could you construct here?
 			- this just involves taking a sqroot at the end 
 			   before doing loss.backward()?
+
+		+ if basic ML model fit the feats much better, why is my NN model arch so poor?
+			Indeed there are features that match target completely
 
 9.26
 
