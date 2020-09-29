@@ -7,6 +7,25 @@
 	[x] bring feats pts11, pts12 to the basic-ML models
 		[x] metrics on those
 
+	update project overview:
+	[x] metrics from metrics-5 saved
+		[x] topleft
+		[~] center
+	[x] metrics from metrics-4 saved
+		[x] do both points
+		
+	set ground work for new analysis...
+	[ ] new nb
+	[ ] build model in nb
+	[ ] build features outside of class
+	
+
+	make featsnet2 work
+	[ ] what if feature set is restricted?
+	[ ] what if estimate one point at a time?
+	[ ] what if hidden layer is removed?
+	[ ] what's an easy way to add normalization to custom net?
+
 	notes:
 		
 		+ would there be a better fit for using sqroot loss?
@@ -16,6 +35,8 @@
 
 		+ if basic ML model fit the feats much better, why is my NN model arch so poor?
 			Indeed there are features that match target completely
+
+			Maybe I just need a better optimizer, momentum, etc?
 
 9.26
 
