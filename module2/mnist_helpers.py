@@ -4,9 +4,8 @@ import pandas as pd
 from IPython.display import display
 from matplotlib import pyplot as plt
 
-from fastai2.basics import *    
-from fastai2.vision.all import *
-from module.mnist_models import FeatsNet
+from fastai.basics import *    
+from fastai.vision.all import *
 
 def seed_everything(seed):
     random.seed(seed)

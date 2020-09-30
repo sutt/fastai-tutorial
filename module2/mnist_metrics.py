@@ -3,8 +3,8 @@ import copy as copyroot
 import pandas as pd
 from IPython.display import display
 from matplotlib import pyplot as plt
-from fastai2.basics import *
-from fastai2.vision.all import *
+from fastai.basics import *
+from fastai.vision.all import *
 
 from sklearn.metrics import r2_score, mean_absolute_error
 
@@ -27,19 +27,10 @@ def metrics_df(
         s_model,
         s_details,
         s_target,
-        y_scaler=None,
         ):
 
     v_preds = learn.get_preds()
     t_preds = learn.get_preds(ds_idx=0)
-
-    if y_scaler is not None:
-        
-        v_preds = ( torch.tensor(y_scaler.inverse_transform(v_preds[0])),
-                    torch.tensor(y_scaler.inverse_transform(v_preds[1])) )
-        
-        t_preds = ( torch.tensor(y_scaler.inverse_transform(t_preds[0])),
-                    torch.tensor(y_scaler.inverse_transform(t_preds[1])) )
 
     v_mse = mse(v_preds[0], v_preds[1]).item()
     t_mse = mse(t_preds[0], t_preds[1]).item()

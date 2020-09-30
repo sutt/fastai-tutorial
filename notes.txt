@@ -1,3 +1,110 @@
+9.30
+
+	[x] do a reload on fastai
+		[x] switch to the new conda-env / library; do a reload
+		-> cane't!
+
+	[x] understand why tabular normalizes non-list inputs
+		[x] can use debugging
+		[x] how to turn on and off?
+
+		tabular.data.py line19:
+			if cont_names is None: cont_names = list(set(df)-set(cat_names)-set(y_names))
+
+			-> doesn't work if y_names is a string instead of a list
+			-> this lets the y col proceed as a `cont_names`
+
+		[x] get it to work for a generic example
+
+	[x] then we want to un-normalize the y's to match mse calc on other metrics
+
+	a note where I stand in fitting topleft with fastai.Tabular:
+		- I found that normalization boosts my perf from r2 .95 -> .995
+			this actually occured by accident due to the procs on y_names bug
+		- I believe this means the issue of fitting two targets at once is not a problem
+			-> correct
+		- I'm still not sure if a restricted feature set is nec. to find a good fit
+		- Ultimately, we're concluding that NN isn't the best way to fit data with 
+			low dimensional, low-stochastic relationships, where basic ML excels
+		- Key: I'm still not sure how to make FeatsNet match the perf of fastai.Tabular
+
+		The bug in fastai demonstrated in bug-y-procs.ipynb
+			- is there a way to apply Normalize to y?
+
+		metrics-6
+		[x] new notebook
+			[X] compact setup
+			[~] scaling with objects from fastai
+			[x] Use scaler
+		[x] pass scaler into metrics_df
+		[ ] metrics to agg
+		[ ] commit
+
+		metrics-6b
+		[ ] do a 10 epoch and 40 epoch fit
+		[ ] restricted feature set
+		[ ] scaled and un-scaled: y / x
+
+	[ ] notebook formatting
+	
+	[ ] try/except for fastai vs fastai2 imports
+		[ ] modules
+			[ ] remove modules2
+		[ ] how to do it for all notebooks?
+			- find and replace?
+			- turn off notebook preview?
+
+
+
+9.29
+
+	set ground work for new analysis...
+	[x] new nb
+	[x] build model in nb
+	[x] build features outside of class
+	
+	[x] use fastai tabular
+
+	[ ] create a synthetic dataset to mimic the situation
+		- might need to do correlation among features
+
+	make featsnet2 work
+	[x] what if feature set is restricted?
+	[x] what if estimate one point at a time?
+	[ ] what if hidden layer is removed?
+	[ ] what's an easy way to add normalization to custom net?
+
+	notes:
+		perhaps the issue is on init?
+
+		When does LR outperform NN's?
+		https://arxiv.org/ftp/arxiv/papers/1911/1911.00353.pdf
+
+		MARS outperfroms NN
+		https://www.cis.upenn.edu/~ungar/Datamining/Publications/tale2.pdf
+
+		in rcm7  -  we see that the fastai tabular learner fails to accuratley 
+					estimate the function, just like BaseNet and FeatsNet
+
+		in rcm7b -  we start to see some clues...
+					we restrict the feature set and get better perf
+					but we see that there is a difference in fit accuracy for target x vs y
+						(as seen in pva plot)
+					we then ameliorate this effect by fitting each separately
+						(we see .99+ r2_scores)
+						problem: now our y becomes normalized over (-3,3)
+							[ ] what is our mse normalized to regular scores?
+						Is the added benefit from the normalization?
+					looks like normalization of Y takes us from r2 .95 -> .995+
+						(the .95 has a distorted pva plot at the ends)
+					[ ] if we just normalize both y's, can we fit one model r2 > .99?
+
+		could be a bug in fastai2...
+			why does it normalize y when only when y_names is not a list?
+
+		why can't I edit the intall?
+
+
 9.28
 
 	[x] FeatsNet, best train
@@ -14,18 +121,7 @@
 	[x] metrics from metrics-4 saved
 		[x] do both points
 		
-	set ground work for new analysis...
-	[ ] new nb
-	[ ] build model in nb
-	[ ] build features outside of class
 	
-
-	make featsnet2 work
-	[ ] what if feature set is restricted?
-	[ ] what if estimate one point at a time?
-	[ ] what if hidden layer is removed?
-	[ ] what's an easy way to add normalization to custom net?
-
 	notes:
 		
 		+ would there be a better fit for using sqroot loss?
