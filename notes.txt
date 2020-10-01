@@ -1,3 +1,81 @@
+10.1
+
+	[x] y_norm on FeatsNet
+		[x] Make it a RegressionBlock not a ImagePoints
+		[x] Verify it matches after de-scaling
+	
+	[x] scaling:
+		[x] is this caused by RegressionBlock or did I break the underlying?
+
+	[ ] commit
+
+	Narrative Summary:
+		- I trained a model to use y_norm with featsNet
+			- this is because featsNet was at .95 r2 and so was fastTab 
+			  untill I used y_norm'ing which put it to .995 r2. Could the 
+			  same thing happen for featsNet? 
+			  - if so, that would mean the two arch's are equivalent for this
+			    task and I could move on
+			-> I got it to work that way, proving the above:
+				r2: .964 -> .993
+				there's still a skw at the tails, but no skew in center anymore
+
+		- So I piped in the Normalization from the outside:
+			- Perfroming Point Scaling and Norm'ing outside the dataloader, 
+			   on the df itself
+			 - Second, involved changing:
+				y_block from ImagePoints -> Regression
+		
+		- First I found good (I think) perf on mse, but I couldn't properly
+		  unscale in metrics_df(), so I went trying to fix that.
+		  	- so you can't really compare it's perf to FeatsNet2.1122
+			  -> evetually I did and got good results
+
+		- Then I found scaling is an issue because we're no longer in -(1,1) space
+		  but more like in (~-3.5, ~3.5) space
+		  	- it doesn't appear that fastai.Learner(y_range) works?
+			- instead I plug my values into the sigmoid func in FeatsNet
+		  -> I went with y_range of samples (not extreme and not default)
+		  		- with default, you get a sigmoid PvA because it can't fit points 
+				  outside of (-1,1) which there are many
+				- with extreme you get slow convergence, but no PvA skew
+
+		-> Now, I have shown how to fit a custom built NN with pts features to get 
+		  close to .999 r2 on the topleft task. 
+		  This means if I can build the pts features I'll be able to fit this as a true, 
+		  chainable NN-Block / NN-layer.
+
+
+	Thoughts:
+		Can you re-parametrize the y_range after fitting the support of your samples?
+			so in this case
+		Can I do matmul for argmin argmax? This would allow gradient
+
+	Notes:
+
+		How can an NN do argmax?
+		
+			https://datascience.stackexchange.com/questions/22242/sort-numbers-using-only-2-hidden-layers
+			
+			https://datascience.stackexchange.com/questions/56676/can-machine-learning-learn-a-function-like-finding-maximum-from-a-list
+
+			https://datascience.stackexchange.com/questions/29345/how-to-sort-numbers-using-convolutional-neural-network
+
+			Claims to have built it
+			https://github.com/primaryobjects/nnsorting
+
+				watch out tho, did it just memorize the input space?
+
+			
+			https://github.com/bmreiniger/datascience.stackexchange/blob/master/56676.ipynb
+
+				based on this:
+				https://core.ac.uk/download/pdf/4894171.pdf
+			
+			Dense Math
+			https://epubs.siam.org/doi/pdf/10.1137/15M1053645
+
+
 9.30
 
 	[x] do a reload on fastai
@@ -29,6 +107,9 @@
 			low dimensional, low-stochastic relationships, where basic ML excels
 		- Key: I'm still not sure how to make FeatsNet match the perf of fastai.Tabular
 
+		- Why does using all cols in fastTab model diverge? 
+			- Did we not fit Net3 with all the pix params?
+
 		The bug in fastai demonstrated in bug-y-procs.ipynb
 			- is there a way to apply Normalize to y?
 			- one challenge is calcing recorder metrics on y's scale, 
@@ -48,6 +129,7 @@
 		[x] do a 10 epoch and 40 epoch fit
 		[x] restricted feature set
 		[x] scaled and un-scaled: y / x
+		[x] commit
 
 		random dev
 		[ ] notebook formatting
@@ -56,6 +138,7 @@
 			[ ] pva plots,
 				[ ] for points
 			[ ] training history helpers
+			[ ] grid search utils
 
 
 	

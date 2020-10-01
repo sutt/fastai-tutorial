@@ -26,7 +26,7 @@ from fastai2.vision.all import *
 
 class FeatsNet(torch.nn.Module):
     
-    def __init__(self, D_in=28, H=28, feats=['pix']):
+    def __init__(self, D_in=28, H=28, feats=['pix'], lo=-1., hi=1.):
         
         self.feats = feats
         self.D = D_in
@@ -50,7 +50,7 @@ class FeatsNet(torch.nn.Module):
         self.linear2 = nn.Linear(in_features=H,       out_features=2, 
                                  bias=False)
         
-        self.sig     = SigmoidRange(-1., 1)
+        self.sig     = SigmoidRange(lo,hi)
 
     def build_pt_feats(self, x, combo='12'):
     
