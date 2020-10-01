@@ -24,12 +24,16 @@
 		- I believe this means the issue of fitting two targets at once is not a problem
 			-> correct
 		- I'm still not sure if a restricted feature set is nec. to find a good fit
+			-> no, all cols still procues huge problems
 		- Ultimately, we're concluding that NN isn't the best way to fit data with 
 			low dimensional, low-stochastic relationships, where basic ML excels
 		- Key: I'm still not sure how to make FeatsNet match the perf of fastai.Tabular
 
 		The bug in fastai demonstrated in bug-y-procs.ipynb
 			- is there a way to apply Normalize to y?
+			- one challenge is calcing recorder metrics on y's scale, 
+				so encoding/decoding yhat/yactual for each batch
+				- is there a simple function from mse(y_sc,yh_sc) -> mse(y, yh)?
 
 		metrics-6
 		[x] new notebook
@@ -37,15 +41,23 @@
 			[~] scaling with objects from fastai
 			[x] Use scaler
 		[x] pass scaler into metrics_df
-		[ ] metrics to agg
-		[ ] commit
+		[x] metrics to agg
+		[x] commit
 
 		metrics-6b
-		[ ] do a 10 epoch and 40 epoch fit
-		[ ] restricted feature set
-		[ ] scaled and un-scaled: y / x
+		[x] do a 10 epoch and 40 epoch fit
+		[x] restricted feature set
+		[x] scaled and un-scaled: y / x
 
-	[ ] notebook formatting
+		random dev
+		[ ] notebook formatting
+		[ ] utilities across projects
+			[ ] sklearn and fastai metrics
+			[ ] pva plots,
+				[ ] for points
+			[ ] training history helpers
+
+
 	
 	[ ] try/except for fastai vs fastai2 imports
 		[ ] modules
@@ -53,6 +65,8 @@
 		[ ] how to do it for all notebooks?
 			- find and replace?
 			- turn off notebook preview?
+
+	[ ] need a new environment for fastai dev with editable installs
 
 
 
@@ -93,14 +107,12 @@
 					we then ameliorate this effect by fitting each separately
 						(we see .99+ r2_scores)
 						problem: now our y becomes normalized over (-3,3)
-							[ ] what is our mse normalized to regular scores?
-						Is the added benefit from the normalization?
+							[x] what is our mse normalized to regular scores?
+							->  less than 1e-3, dist_avg = 1e-3
+						Is the added benefit from the normalization? -> yes
 					looks like normalization of Y takes us from r2 .95 -> .995+
 						(the .95 has a distorted pva plot at the ends)
-					[ ] if we just normalize both y's, can we fit one model r2 > .99?
-
-		could be a bug in fastai2...
-			why does it normalize y when only when y_names is not a list?
+					[x] if we just normalize both y's, can we fit one model r2 > .99? -> yes
 
 		why can't I edit the intall?
 
