@@ -1,3 +1,212 @@
+10.6
+
+	[ ] Commit exisitng work in tut
+	[ ] Replicate or save the dataset
+		[ ] using sklearn.synthetic_data
+		[ ] just save to a csv?
+		[ ] explore the exisiting dataset, e.g. correlations
+	[ ] Get a Collab account
+		[ ] post the motivating example via collab
+	[ ] Post the problem to the forum with writeup
+		[ ] collab notebook with all the steps
+	
+	[ ] Icevision ready to go:
+
+
+
+10.5
+
+	[ ] It would be also nice to append to csvlogger without duplicating the column headers	
+
+10.4
+
+	[x] Fix CSVLogger bug
+		[x] repro ->tut_multitask/cvslog-1.ipynb
+
+		It's in exiting the Context Manager in get_preds that after_epoch is fired.
+			specifically in Learner.__exit__
+
+		The learner as a callback get's added in GatherPredsCallback
+		or in: ctx_mgrs = self.validation_context(cbs=L(cbs)+[cb], inner=inner)
+			in here:
+
+		[x] turn off threading / "multiprocessing"
+			[x] verify it is threading currently -> task manager shows 33 - 50% cpu usage
+			[x] serach documentation
+			[x] verify this on debugger
+			num_workers=0 
+			n_workers=0
+
+		[x] get a synth learner working
+			[x] where in the documentation -> test_utils
+
+		[x] does this work for .validate?
+
+		Solution:
+			if hasattr(self, "gather_preds"): return
+
+			at top of both: before_fit and after_fit
+
+		examples to learn from:
+			
+			class ShowGraphCallback(Callback):
+				self.run = not hasattr(self.learn, 'lr_finder') and not hasattr(self, "gather_preds")
+
+			class FetchPredsCallback(Callback):
+			def after_validate(self):
+        		to_rm = L(cb for cb in self.learn.cbs if getattr(cb, 'remove_on_fetch', False))
+        		with self.learn.removed_cbs(to_rm + self.cbs) as learn:
+
+
+		[x] git blame on the line in context manager
+
+			-> d9ed4a8337bab36d3680fd787494e83ebd2f9a4b
+				by jph, aug 14
+
+				previous commit:
+				59d878d3cf233ea24eb8fd8987098f17edd8c8ef
+
+			Need to change torchcore as well:
+			
+				env=fastai2
+					
+				  torchcore
+					location: fastai2-dev/fastcore-win/
+					version:  0.1.11
+
+				  fastai2
+
+					pip-version: 0.0.26
+					
+					git-version:
+					git last commit: May 24
+					setting.ini:    0.0.18
+
+						(must set path this to the git repo)
+	
+
+		[x] reset the git workspace
+		
+		This is what we want but it's already off after Learner.__exit__ calls after_epoch
+
+			@contextmanager
+    		def no_logging(self): return replacing_yield(self, 'logger', noop)
+
+			This is suppoed to stop CSVLogger from _write_line() by suppressing 
+			  the functionality in Recorder in after_epoch line 477, which calls:
+					self.logger(self.log)
+			
+			-> perhaps add it as last event?
+
+		calling get_preds(inner=True) makes it work
+
+		Does self._end_cleanup() ever get called in get_preds()?
+			-> no
+
+		Question: is my problem that the context gets turned off in wrong order?
+							or that it never does anything to begin with?
+
+
+
+10.3
+
+	Setup dev env for fastai:
+
+		The instructions I followed:
+		https://docs.fast.ai/dev/develop
+		https://docs.fast.ai/dev/git
+
+		These are newer(?) instructions
+		https://docs.fast.ai/dev-setup
+
+		https://github.com/fastai/fastai/blob/master/CONTRIBUTING.md
+
+		https://docs.fast.ai/dev/test.html
+
+		https://github.com/fastai/fastai/graphs/contributors
+			10 commits to be in top10 (I have 2 already)
+
+		https://docs.fast.ai/dev/git#how-to-make-a-pull-request-pr
+			
+			notes:
+			- run hooks!
+			- make sure to create branch!
+				otherwise, you can't do subsequent PR's; "divereged origin"
+				you can reset using step8
+			- use nbdev_build_lib
+			- use nbdev_diff_nbs
+			- push to origin
+
+		major diff in instructions old vs new
+			-> overall: workflow will still work
+			- new uses the gh pkg
+			- new does a fastcore editable install
+				- uses: pip install -qe fastcore
+				- this can corrected later
+			- new: git push -u origin HEAD (for first PR?)
+			- new has more concise fork sync
+
+		starting with 10.7GB of space, ended with 6.4
+			(maybe delete pip cache afterwards)
+
+		>conda activate devfastai
+		
+		>conda install pytorch torchvision cudatoolkit=10.2 -c pytorch   
+			
+			from: https://pytorch.org/get-started/locally/
+
+		>conda list >  conda-list-10.3.2020-v1.txt
+
+			(in fastai-dev/misc/)
+
+		>git clone 
+
+			(in wsl)
+
+		>pip install -e ".[dev]"  (in sutt-dev-fastai)
+
+		> pip list > ()
+
+			(in fastai-dev/misc/)
+
+		[x] do i have `gh` pkg? -> not automatically but i got it
+		
+		[x] how to make a PR docs?
+			[x] how to handle nb_dev?
+
+		[x] run some test commands
+		[x] vscode repo just for that repo
+			[x] set the python path
+
+	[x] PR - y_names
+
+		[x] check the tabular examples in docs
+			- does it get affected? it is categorical so maybe not?
+			- does it go down in accuracy?
+			
+
+		[x] code fix:
+			additional fixes on cont_names
+			additional fixes on set(df)?
+			do it inline?
+
+		[x] pr message
+			[x] link to the docs
+
+		[x] demonstration notebook
+			[x] add section for working with the set(obj) line
+
+		[~] need tests
+
+	[x] Find old bug 
+		- it was about erasing CSVLogger after get_preds()
+		- it's from 9.6 so those notebooks would be relevant
+
+
+
+
+		
+
 10.1
 
 	[x] y_norm on FeatsNet
@@ -7,7 +216,7 @@
 	[x] scaling:
 		[x] is this caused by RegressionBlock or did I break the underlying?
 
-	[ ] commit
+	[x] commit
 
 	Narrative Summary:
 		- I trained a model to use y_norm with featsNet
@@ -52,6 +261,18 @@
 		Can I do matmul for argmin argmax? This would allow gradient
 
 	Notes:
+		
+		STN
+		https://pytorch.org/tutorials/intermediate/spatial_transformer_tutorial.html
+
+			pytorch differentiable indexing
+			https://discuss.pytorch.org/t/differentiable-indexing/17647
+			https://discuss.pytorch.org/t/indexing-a-variable-with-a-variable/2111/4?u=magz
+			https://discuss.pytorch.org/t/differentiable-indexing-with-float-tensors/81848/2
+			https://discuss.pytorch.org/t/gradient-zero-for-one-parameter-in-custom-model-resulting-in-no-update/81091/6
+
+			https://arxiv.org/abs/1506.02025
+
 
 		How can an NN do argmax?
 		
