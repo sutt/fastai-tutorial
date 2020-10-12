@@ -1,10 +1,85 @@
 10.6
 
-	[ ] Commit exisitng work in tut
-	[ ] Replicate or save the dataset
-		[ ] using sklearn.synthetic_data
-		[ ] just save to a csv?
-		[ ] explore the exisiting dataset, e.g. correlations
+	Code along
+	https://colab.research.google.com/github/ai-fast-track/icedata/blob/master/Creating_Dataset.ipynb#scrollTo=5x_PcSy4lOJv
+
+	Setting up Cloud
+	gcloud compute ssh --zone=us-central1-a jupyter@may2-instance-1 -- -L 8080:localhost:8080
+	gcloud compute ssh --zone=us-west1-a jupyter@demo-cuda101 -- -L 8080:localhost:8080
+	gcloud beta compute ssh --zone "us-west1-a" "demo-cuda101" --project "fastaipt1" -- -L 8080:localhost:8080
+
+	Get kernels in notebooks
+	https://forums.fast.ai/t/google-cloud-config-issue-jupyter-loads-wrong-python-kernel/49598
+	https://ipython.readthedocs.io/en/latest/install/kernel_install.html
+
+	python -m ipykernel install --user jupyter --name newfastai --display-name "newfastai"
+	python -m ipykernel install --user --name newfastai --display-name "newfastai"
+
+	Building instances
+	https://cloud.google.com/ai-platform/deep-learning-vm/docs/release-notes
+
+	Updating / installing cuda drivers on VM's
+	https://towardsdatascience.com/installing-cuda-on-google-cloud-platform-in-10-minutes-9525d874c8c1
+		http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/
+
+	Narrative Summary:
+		
+		One problem I've focused on is fitting a NN with many superfluous columns
+		 when only a few are highly relevant [actually perfect predictors].
+
+		To illustrate this issue, I've built replicate-data-1.ipynb where I use 
+		sklearn.make_regression to create an example dataset to match my problem:
+			Y : (-2000,2000)
+			N = 700
+			p = 804
+			feats 0-799: can get 90% R2 via LinReg
+			feats 800-804: perfectly linearly correlated with Y
+
+		Running the synthetic regression data through Tabular Model sees the following:
+
+			- when only selecting 20 superfluous columns, we get to R2 .99 in 10 epochs
+
+			- when selecting all 800 superfluous columns, we plateau at .40 -.60 R2
+
+		Then I brought out FeatsNet again. This is where I initially had problems 
+		fitting the data with all the feats (feats=['pix', 'pts11',...]).
+
+			But now that I run it again, I'm getting up to .95 R2 
+			(albeit with 120 epochs). I thought it was worse than that. 
+			In metrics-6b.ipynb
+				
+			Similar to other work where we took r2 from .95 to .995 viz normalizing Y, 
+			this might be the case here too. This work is detailed in:
+				 metrics-5b.ipynb - FeatsNet reach r2 of .96 with y un-norm'd
+
+			
+			One question is how to make this converge more quickly.
+
+			Issues / Thoughts:
+
+				- One major difference is that 
+					FeatsNet has 2-targets, 
+					Tabular has  1-target
+				
+				- The major diff between tabular vs featsnet is feats net has a:
+					simpler and shallower architecture.
+					- perhaps that's the ley to this type of "low-dimensional" problem?
+			
+				- I wonder if it has to do with scaling?
+					in my synth data, Y is on 1000's scale
+
+				- currently FeatsNet must use image dataloader and tabular must use tabular dl
+					so we can't compare them directly yet.
+					- need to be able to build a tabular arch in fastai framework 
+					  to replicate the FeatsNet simple arch
+
+10.5
+
+	[x] Commit exisitng work in tut
+	[x] Replicate or save the dataset
+		[x] using sklearn.synthetic_data
+		[x] just save to a csv?
+		[x] explore the exisiting dataset, e.g. correlations
 	[ ] Get a Collab account
 		[ ] post the motivating example via collab
 	[ ] Post the problem to the forum with writeup
@@ -12,11 +87,8 @@
 	
 	[ ] Icevision ready to go:
 
+	PR: [ ] It would be also nice to append to csvlogger without duplicating the column headers	
 
-
-10.5
-
-	[ ] It would be also nice to append to csvlogger without duplicating the column headers	
 
 10.4
 

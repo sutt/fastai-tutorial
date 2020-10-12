@@ -7,6 +7,8 @@ from matplotlib import pyplot as plt
 from fastai.basics import *    
 from fastai.vision.all import *
 
+from module2.mnist_models import FeatsNet
+
 def seed_everything(seed):
     random.seed(seed)
     os.environ['PYTHONHASHSEED'] = str(seed)

@@ -3,25 +3,42 @@ import copy as copyroot
 import pandas as pd
 from IPython.display import display
 from matplotlib import pyplot as plt
+from torch import nn
 from fastai.basics import *
 from fastai.vision.all import *
 
 
-# class BaseNet(torch.nn.Module):
-#     def __init__(self, D_in=28, H=28):
-#         super(BaseNet, self).__init__()
-#         self.flat    = nn.Flatten()
-#         self.linear1 = nn.Linear(in_features=D_in**2, out_features=H)
-#         self.relu1   = nn.
-#         self.linear2 = nn.Linear(in_features=H, out_features=2, bias=False)
-#         self.sig     = SigmoidRange(-1., 1)
+class BaseNet(torch.nn.Module):
+    def __init__(self, D_in=28, H=28):
+        super(BaseNet, self).__init__()
+        self.flat    = nn.Flatten()
+        self.linear1 = nn.Linear(in_features=D_in**2, out_features=H)
+        self.relu1   = nn.ReLU()
+        self.linear2 = nn.Linear(in_features=H, out_features=2, bias=False)
+        self.sig     = SigmoidRange(-1., 1)
     
-#     def forward(self, x):
-#         l0 = self.flat(x)
-#         l1 = self.linear1(l0)
-#         l2 = self.linear2(l1)
-#         y =  self.sig(l2)
-#         return y
+    def forward(self, x):
+        l0 = self.flat(x)
+        l1 = self.linear1(l0)
+        l2 = self.linear2(l1)
+        y =  self.sig(l2)
+        return y
+
+class TabNet(torch.nn.Module):
+    def __init__(self, D_in=804, H=28, lo=-1., hi=1.):
+        super(TabNet, self).__init__()
+        # self.flat    = nn.Flatten()
+        self.linear1 = nn.Linear(in_features=D_in, out_features=H)
+        self.relu1   = nn.ReLU()
+        self.linear2 = nn.Linear(in_features=H, out_features=2, bias=False)
+        self.sig     = SigmoidRange(lo, hi)
+    
+    def forward(self, x):
+        # l0 = self.flat(x)
+        l1 = self.linear1(l0)
+        l2 = self.linear2(l1)
+        y =  self.sig(l2)
+        return y
 
 
 class FeatsNet(torch.nn.Module):

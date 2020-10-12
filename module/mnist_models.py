@@ -5,6 +5,7 @@ from IPython.display import display
 from matplotlib import pyplot as plt
 from fastai2.basics import *
 from fastai2.vision.all import *
+from module.mnist_models import FeatsNet
 
 
 # class BaseNet(torch.nn.Module):
