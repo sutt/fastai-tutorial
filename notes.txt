@@ -1,3 +1,46 @@
+10.12
+
+
+	>gcloud compute ssh --zone us-west1-b jupyter@dlvm-cuda101-vm -- -L 8080:localhost:8080
+
+		this logs in as user=user (not user=jupyter)
+		gcloud compute ssh --project fastaipt1 --zone us-west1-b dlvm-cuda101-vm -- -L 8080:localhost:8080
+
+	Install Commands:
+
+	>conda create --name newfastai python=3.7
+	>conda activate newfastai
+	>conda install pytorch torchvision cudatoolkit=10.1 -c pytorch
+	>conda install -c fastai fastai
+	>conda install jupyter
+	>conda install opencv
+	>python -m ipykernel install --user --name newfastai --display-name "newfastai2"
+	 	in: /home/jupyter/.local/share/jupyter/kernels/newfastai
+		(this didn't work the first time)
+
+	still need: opencv, icevision
+	
+	(not used: >conda install -c fastai -c pytorch -c anaconda fastai gh anaconda)
+
+	>conda install icevision
+	>conda install icedata
+
+	docs:
+		https://medium.com/pytorch/pytorch-xla-is-now-generally-available-on-google-cloud-tpus-f9267f437832
+			https://github.com/pytorch/xla/tree/master/contrib/colab
+			https://www.kaggle.com/tanlikesmath/the-ultimate-pytorch-tpu-tutorial-jigsaw-xlm-r
+			https://news.ycombinator.com/item?id=24720681
+		
+		https://cloud.google.com/ai-platform/deep-learning-vm/docs/pytorch_start_instance
+
+		https://console.cloud.google.com/dm/deployments/details/dlvm-cuda101?project=fastaipt1
+
+	extra docs:
+
+		https://aws.amazon.com/blogs/machine-learning/serving-pytorch-models-in-production-with-the-amazon-sagemaker-native-torchserve-integration/
+
+		https://colab.research.google.com/notebooks/tpu.ipynb#scrollTo=MKFMWzh0Yxsq
+
 10.6
 
 	Code along

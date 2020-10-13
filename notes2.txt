@@ -1,0 +1,112 @@
+9.22
+
+	[x] Inference with no loaded weights
+	
+	[x] Get cuda working on kaggle
+		instaling fastai(v2) forces: torch: 1.5.1 -> 1.6.0
+		[x] does torch have cuda avaialble? initially? -> yes
+		
+		>!nvidia-smi
+		
+		[x] install with instructions
+		>pip install torch==1.6.0+cu101 torchvision==0.7.0+cu101 -f https://download.pytorch.org/whl/torch_stable.html
+			-> works
+			
+			-> solved via installing the new version with special insturctions before pip tried to auto upgrade it with generic insturctions on the install of fastai
+			
+		[x] test that inference runs with gpu
+		
+	[x] Matplotlib issue
+		[x] who is culprit for forcing update?
+			-> icevision: matplotlib 3.2.1 -> 3.3.2
+			-> in pyproject.toml matplotlib = "^3.3.2"
+			
+		-Only known solution is to import plt and plt.imshow() before installing icevision
+		
+		-This is probably because the module doesn't "reload" after pip install
+		
+		- Another strategy is to:
+			1. pip install required version of other packages, not matplotlib related
+			2. pip install icevision with --no-deps flag
+			
+		- Another possibility is in sidebar set Environment to "latest"
+		
+		
+	[ ] Training run on kaggle
+	
+		[x] train a quick model (2 epochs)
+		
+		[x] verify inference
+		
+		[x] save weights
+		
+		[~] verify it's working on gpu
+			-> for inference it's 10x faster on cuda
+			-> for training I can't tell
+		
+		[~] train a long model (10 epochs)
+		
+		[ ] test against local
+		
+		
+	[ ] Get a Collab notebook account
+		
+	Fixes:
+		
+		matplotlib issue
+		
+		`size` not set in training example
+			-> https://airctic.com/examples/training/
+			
+		use fastai 2.x instead of fastai2 0.x
+		
+		[ ] Investigate this warning when launching training
+			/opt/conda/lib/python3.7/site-packages/fastai2/callback/core.py:50: UserWarning: You are setting an attribute (loss) that also exists in the learner, so you're not setting it in the learner but in the callback. Use `self.learn.loss` otherwise.
+			warn(f"You are setting an attribute ({name}) that also exists in the learner, so you're not setting it in the learner but in the callback. Use `self.learn.{name}` otherwise.")
+		
+
+Problems:
+
+	Problem in environment `icevision` has to do with editable install?
+		-> no, need icedata for icevision to import without err
+
+	Can i even get icevision working if i don't have anything called fastai2?
+		
+	pycosat==0.6.2 produces seg faults?
+		- what is a segmantation fault?
+			  
+	Is it ok that conda installs cuda versions and toolkits?
+	  
+Install Commands:
+
+	>conda clean -a
+	>conda info --envs
+	>conda env remove --name icevision
+	>conda create --name newfastai python=3.7
+	>conda activate newfastai
+	>conda install -c fastai -c pytorch -c anaconda fastai gh anaconda
+	
+	>conda install icevision
+	>conda install icedata
+	
+
+IceVision
+
+	https://github.com/airctic/icevision/
+	https://github.com/airctic/icedata
+	
+	1-3pm on Discourse
+	
+	https://airctic.com/install/
+	https://airctic.com/inference/
+	
+	https://github.com/airctic/model_zoo/releases/
+	
+Jupyter
+
+	#notebook-container {
+		margin-left: 10px !important;
+	}
+	
+	where to put this override?
+	 ->  ~/anaconda3/envs/newfastai/lib/python3.7/site-packages/notebook/static/notebook/css/override.css
