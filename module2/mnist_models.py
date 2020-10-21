@@ -7,6 +7,13 @@ from torch import nn
 from fastai.basics import *
 from fastai.vision.all import *
 
+def zero_p(nn_module, epsilon=1e-6):
+    sd = nn_module.state_dict()
+    for k in sd.keys(): 
+        sd[k].zero_()
+        sd[k] += epsilon
+    nn_module.load_state_dict(sd)
+    return nn_module
 
 class BaseNet(torch.nn.Module):
     def __init__(self, D_in=28, H=28):
