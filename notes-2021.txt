@@ -1,0 +1,96 @@
+Quickstart - how to activate the notebook:
+    can run conda base to start notebooks and switch kernels to:
+        - devfastai: - the local fastai package
+            (version depends on branch, see below)
+        - newfastai: - in site-pacakges 2.0.13 (sept 17 2020)
+        - fastai2: v1.0.61
+
+    in files/fastai2-dev/sutt-dev-fastai-wsl/
+        - activate devfastai
+        - git branch: master vs feb2020
+            - currently (as of 2.20.21):
+                master:
+                    last commit: Oct 25
+                    version= 2.0.17
+                feb2020:
+                    last commit: Feb 10
+                    version=2.2.5 
+            - there is a breaking change in dependencies here
+
+Summary of exisitng work:
+    
+    metrics-agg-1.ipynb: a great summary
+
+        questions:
+            - what do each fo these metrics mean?
+                r2, dist_avg, dist_r2, mse (what units?)
+            - what are Feats and Feats2 as it realtes to feature augmentation
+
+        todo: 
+            - group the algos by performance in a table
+            - scale error to pixel distance
+
+    random-invest-5 doing sklearn models?
+
+Other Tasks:
+    - migrating to newfastai version
+    - get a cloud cpu instance (for disk space)
+    - building a condenv for the current notebooks
+    - actually build out p-nist (save to disk) and starter code 
+    - reset the git status + organize repo:
+        - bug stuff from fastai
+        - custom nn modules
+            - how to change all imports systematically?
+    - run a conversion from 
+    - we want an environment where we can actually throw models at it
+        - and well known perfromance baselines
+        - we'd like to vary the datasize and 
+    - build a "hybrid learner model" where we tell it what the digit is and then feed it the pixels and it tries to determine the point
+    - make the targets bounding boxes and use object detction algos at it
+    - build a class wrapper for different learners so we can evaluate them on equal terms
+    
+
+Ultimate Aim: Focus on P-NIST dataset and being unsolvable via CNN
+    - then produce a architectural change to solve this problem
+    - can this just be a special filter type?
+
+Error Baselines: 
+    r2 is useful
+    convert flow field distance error to pixel dist by scaling for image size
+
+Develop variations on P-NIST
+    - can we get more image data per digit
+    - build an "intuitive" top-left point algo as a new task
+    - add noise like background specks
+    - augmentation style distortions
+    - add noise to the Y-task
+    - make a separate synthetic point for each of the digits: "Q"-NIST
+
+
+Desired Research-Project Directory + Utility Structure
+
+    data/
+        dataset1/
+        ...
+
+    data-gen/
+        X1-Y1  # x is base dataset, y is synthetic target
+        X2-Y1  # 
+
+    learners/
+
+    training-logs/
+
+    evaluations/
+    
+    perf-benchmarks/
+
+    model-playground/
+        - quickstart notebook
+
+    narrative/
+        - summary of reports
+        - link to html of the relevant notebooks
+
+    other ideas:
+        convert jupyter notebooks to html?

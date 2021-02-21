@@ -1,3 +1,11 @@
+	Code Along
+	https://github.com/airctic/IceLiveCoding/blob/main/2020-10-13-Live-Coding.md
+
+		https://colab.research.google.com/github/airctic/icedata/blob/master/notebooks/dev/indoor_objects.ipynb
+		
+
+	pip install git+git://github.com/airctic/icevision.git#egg=icevision[all] --upgrade
+	hey
 10.12
 
 

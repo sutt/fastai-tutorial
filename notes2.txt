@@ -1,3 +1,4 @@
+(see notes 2021 for continuation)
 9.22
 
 	[x] Inference with no loaded weights
@@ -81,7 +82,7 @@ Install Commands:
 
 	>conda clean -a
 	>conda info --envs
-	>conda env remove --name icevision
+	>conda env remove --name newfastai
 	>conda create --name newfastai python=3.7
 	>conda activate newfastai
 	>conda install -c fastai -c pytorch -c anaconda fastai gh anaconda

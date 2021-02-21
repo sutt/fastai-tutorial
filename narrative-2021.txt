@@ -1,0 +1,53 @@
+Experiment Summary:
+=====================
+
+To examine this task we fit a variety of models to the datset and group their performance
+    
+    Linear Model (under various regularization)
+    Random Forests with 
+    Simple 2-3 Layer NN
+    Off the shelf CNN (we augment the image to three channels? )
+The groupings can be described as:
+    
+    TierA - close to perfect 98 - 99% R2
+        these most of the traditional ML models using the pre-calc'd features [1]
+    Tier B - Decent Perf 84 - 90% R2
+        these are the traditional ML models
+    Tier C - Subsatifactory 60% - 70% R2
+        these
+    Tier D - Poor Performers 40 - 55% R2
+        here's the off the shelf CNN and Simple Fully-Connect NN
+    Tier E- Losers < 40% R2
+        these are several 
+
+    [ ] question: in the metrics-agg table why are there two "FeatsNet1.22" with 0.682 bs .39 R2?
+
+[1]: Some of the models do not perform well even with a 1-1 mapping between the augmented features, this occurs likely due to severe multi-collinearity
+
+For all models except the complex CNN, perform a flatten operation on 2-D image data, greatly reducing their intutive geometric reasoning ability.
+
+We also include ahead of the time feature set for each operation, calculated on various min/max operation. There are roughly this many features for each subset:
+    
+    Feats1.11  | N_1
+    Feats1.12  | N_2
+    Feats1.22  | N_3 * ? These features provide a 1-1 mapping to the target and should enable the right learners to learn near perfectly, if they are capable of appropriate feature selection and tuning.
+
+Even in the abscence of the features, a learner can be constructed (a priori) to perfectly estimate the X -> Y function since this Y is a synthetic calculation with no noise added to it.
+
+The state of the art cnn's also take far more time, measure in epochs to train than simple FCNN's (90 epochs vs 30) and acheive similiar performance.
+
+Surprsing findings in ascending order:
+    1.) Some classic ML learners will not be able to learn a 1:1 mapping between X and Y. But this is beyond the scope of this investigation
+    2.) Some traditional ML techniques perfrom suprisingly well despite receiving the data in flattend form which makes this task difficult
+    3.) State of the art off the shelf CNN is unable to perform this task.
+
+P-NIST
+=======================
+
+We use the data from MNIST to construct a synthetic image point task - finding the top left pixel in a hand drawn digit.
+
+The actual target turns out to be quite un-intuitive sometimes, see examples and exact formula
+
+Nevertheless a learner with all the data, fitting a target derived deterministically, via a simple formula, without noise added should be acheivable.
+
+TODO: add the size of the train and valid datasets.
